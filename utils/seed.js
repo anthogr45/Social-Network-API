@@ -1,43 +1,39 @@
 const connection = require('../config/connection');
-const { User, Video } = require('../models');
-const { getRandomName, getRandomVideos } = require('./data');
+const User = require('../models/User');
+const Thought = require('../models/Thought');
+const Reaction = require('../models/Reaction');
+const { userData, thoughtData, reactionData } = require('./data');
 
-connection.on('error', (err) => err);
+const seedData = async () => {
+  try {
+    await User.deleteMany({});
+    await Thought.deleteMany({});
+    await Reaction.deleteMany({});
 
-connection.once('open', async () => {
-  console.log('connected');
-  // Delete the collections if they exist
-  let videoCheck = await connection.db.listCollections({ name: 'videos' }).toArray();
-  if (videoCheck.length) {
-    await connection.dropCollection('videos');
+    const dataUsers = await User.create(userData);
+    const dataThoughts = await Thought.create(thoughtData);
+    const dataReactions = await Reaction.create(reactionData);
+
+    // Associate thoughts with users
+    for (const thought of dataThoughts) {
+      const user = dataUsers.find(user => user.username === thought.username);
+      user.thoughts.push(thought._id);
+      await user.save();
+    }
+
+    // Associate reactions with thoughts
+    for (const reaction of dataReactions) {
+      const thought = dataThoughts[Math.floor(Math.random() * dataThoughts.length)];
+      thought.reactions.push(reaction);
+      await thought.save();
+    }
+
+    console.log('Data seeded successfully');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error seeding data:', error);
+    process.exit(1);
   }
+};
 
-  let userCheck = await connection.db.listCollections({ name: 'users' }).toArray();
-  if (userCheck.length) {
-    await connection.dropCollection('users');
-  }
-
-  const users = [];
-  const videos = getRandomVideos(10);
-
-  for (let i = 0; i < 20; i++) {
-    const fullName = getRandomName();
-    const first = fullName.split(' ')[0];
-    const last = fullName.split(' ')[1];
-
-    users.push({
-      first,
-      last,
-      age: Math.floor(Math.random() * (99 - 18 + 1) + 18),
-    });
-  }
-
-  await User.collection.insertMany(users);
-  await Video.collection.insertMany(videos);
-
-  // loop through the saved videos, for each video we need to generate a video response and insert the video responses
-  console.table(users);
-  console.table(videos);
-  console.info('Seeding complete! 🌱');
-  process.exit(0);
-});
+seedData()

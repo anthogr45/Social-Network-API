@@ -1,187 +1,89 @@
-const { User, Thought } = require('./models');
+const { User, Thought, Reaction } = require('./models');
 
 const userData = [
   {
     username: 'john_doe',
     email: 'john@example.com',
+    thoughts: [],
+    friends: []
   },
   {
     username: 'jane_smith',
     email: 'jane@example.com',
+    thoughts: [],
+    friends: []
   },
-  // Add more user data as needed
+  {
+    username: 'Anthony_G',
+    email: 'anthony@gmail.com',
+    thoughts: [],
+    friends: []
+  },
+  {
+    username: 'Steff_G',
+    email: 'steff@gmail.com',
+    thoughts: [],
+    friends: []
+  },
+  {
+    username: 'Frank_Silva',
+    email: 'frank@gmail.com',
+    thoughts: [],
+    friends: []
+  },
+ 
 ];
 
 const thoughtData = [
   {
-    thoughtText: 'Hello, world!',
+    thoughtText: 'World is a cool place to live!',
     username: 'john_doe',
+    reaction: []
   },
   {
-    thoughtText: 'I love coding!',
+    thoughtText: 'I love coding with Java!',
     username: 'jane_smith',
+    reaction: []
   },
-  // Add more thought data as needed
+  {
+    thoughtText: 'Hope all the world wars will en soon for Peace on Earth',
+    username: 'Anthony_G',
+    reaction: []
+  },
+  {
+    thoughtText: 'I love the Canadian winter, specialy during Christmas!',
+    username: 'Steff_G',
+    reaction: []
+  },
+  {
+    thoughtText: 'Ocean depth is so beutifull place to explore when there is bright sun light!',
+    username: 'Frank_Silva',
+    reaction: []
+  },
+
 ];
 
-const seedData = async () => {
-  try {
-    // Remove existing data
-    await User.deleteMany({});
-    await Thought.deleteMany({});
+const reactionData = [
+  {
+    reactionBody: 'Good Idea',
+    username: 'Anthony_G'
+  },
+  {
+    reactionBody: 'Love this thought',
+    username: 'Frank_Silva'
+  },
+  {
+    reactionBody: 'Thank you for this thought',
+    username: 'Steff_G'
+  },
+  {
+    reactionBody: 'Great thought. Thanks My friend.',
+    username: 'john_doe'
+  },
+  {
+    reactionBody: 'Thats beutifull. Amazing thought',
+    username: 'jane_smith'
+  },
+];
 
-    // Create users
-    const users = await User.insertMany(userData);
-
-    // Create thoughts
-    const thoughts = await Thought.insertMany(
-      thoughtData.map(thought => ({
-        ...thought,
-        userId: users.find(user => user.username === thought.username)._id,
-      }))
-    );
-
-    console.log('Data seeded successfully!');
-    process.exit(0);
-  } catch (error) {
-    console.error('Error seeding data:', error);
-    process.exit(1);
-  }
-};
-
-seedData();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const names = [
-//   'Aaran',
-//   'Aaren',
-//   'Aarez',
-//   'Aarman',
-//   'Aaron',
-//   'Aaron-James',
-//   'Aarron',
-//   'Aaryan',
-//   'Aaryn',
-//   'Aayan',
-//   'Aazaan',
-//   'Abaan',
-//   'Abbas',
-//   'Abdallah',
-//   'Abdalroof',
-//   'Abdihakim',
-//   'Abdirahman',
-//   'Abdisalam',
-//   'Abdul',
-//   'Abdul-Aziz',
-//   'Abdulbasir',
-//   'Abdulkadir',
-//   'Abdulkarem',
-//   'Ze',
-//   'Zechariah',
-//   'Zeek',
-//   'Zeeshan',
-//   'Zeid',
-//   'Zein',
-//   'Zen',
-//   'Zendel',
-//   'Zenith',
-//   'Zennon',
-//   'Zeph',
-//   'Zerah',
-//   'Zhen',
-//   'Zhi',
-//   'Zhong',
-//   'Zhuo',
-//   'Zi',
-//   'Zidane',
-//   'Zijie',
-//   'Zinedine',
-//   'Zion',
-//   'Zishan',
-//   'Ziya',
-//   'Ziyaan',
-//   'Zohaib',
-//   'Zohair',
-//   'Zoubaeir',
-//   'Zubair',
-//   'Zubayr',
-//   'Zuriel',
-//   ``,
-// ];
-
-// const descriptionsBodies = [
-//   'How to disagree with someone',
-//   'iPhone review',
-//   'how-to video',
-//   'video essay on the history of video games',
-//   'How to make money on the App Store',
-//   'Learn NextJS in five minutes (Not clickbate)',
-//   'Movie trailer',
-//   'Hello world',
-//   'Another possible solution to the algorithm',
-//   'Apology video',
-//   'Submission for startup pitch',
-// ];
-
-// const possibleResponses = [
-//   'I disagree!',
-//   'I tried your algorithm, here were the results',
-//   'This was awesome',
-//   'Thank you for the great content',
-//   'Please check out my video response',
-//   'Like and subscribe to my channel please',
-//   'Reply: The side effects of in app purchases on digital marketplaces',
-// ];
-
-// const users = [];
-
-// // Get a random item given an array
-// const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-// // Gets a random full name
-// const getRandomName = () =>
-//   `${getRandomArrItem(names)} ${getRandomArrItem(names)}`;
-
-// // Function to generate random videos that we can add to the database. Includes video responses.
-// const getRandomVideos = (int) => {
-//   let results = [];
-//   for (let i = 0; i < int; i++) {
-//     results.push({
-//       published: Math.random() < 0.5,
-//       description: getRandomArrItem(descriptionsBodies),
-//       advertiserFriendly: Math.random() < 0.5,
-//       responses: [...getVideoResponses(3)],
-//     });
-//   }
-//   return results;
-// };
-
-// // Create the responses that will be added to each video
-// const getVideoResponses = (int) => {
-//   if (int === 1) {
-//     return getRandomArrItem(possibleResponses);
-//   }
-//   let results = [];
-//   for (let i = 0; i < int; i++) {
-//     results.push({
-//       responseBody: getRandomArrItem(possibleResponses),
-//       username: getRandomName(),
-//     });
-//   }
-//   return results;
-// };
-
-// // Export the functions for use in seed.js
-// module.exports = { getRandomName, getRandomVideos, getRandomVideos };
+module.exports = { userData, thoughtData, reactionData};

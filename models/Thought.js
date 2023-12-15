@@ -12,7 +12,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      // get: (timestamp) => dateFormat(timestamp),
+      get: (timestamp) => dateFormat(timestamp),
       
     },
     username: {
@@ -35,13 +35,13 @@ const thoughtSchema = new Schema(
   }
 );
 
-thoughtSchema.methods.getters = function() {
-  return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss'); 
-};
+// thoughtSchema.methods.getters = function() {
+//   return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss'); 
+// };
 
-// function dateFormat(timestamp) {
-//   return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
-// }
+function dateFormat(timestamp) {
+  return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+}
 
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;

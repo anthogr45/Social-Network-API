@@ -44,7 +44,7 @@ module.exports = {
   async updateThought(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
-        { _id: req.params.thoughtIdId },
+        { _id: req.params.thoughtId },
         { $set: req.body },
         { runValidators: true, new: true }
       );

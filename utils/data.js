@@ -1,4 +1,4 @@
-const { User, Thought, Reaction } = require('./models');
+const { User, Thought, Reaction } = require('../models');
 
 const userData = [
   {
@@ -31,7 +31,7 @@ const userData = [
     thoughts: [],
     friends: []
   },
- 
+  // Add more user data as needed
 ];
 
 const thoughtData = [

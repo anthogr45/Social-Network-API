@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -25,7 +26,7 @@ const userSchema = new Schema(
   friends: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'Thought'
     }
   ]
 });

@@ -3,7 +3,6 @@
   "version": "1.0.1",
   "description": "NoSQL SocialNetworkAPI ",
   "main": "index.js",
- 
   "scripts": {
     "start": "node index",
     "dev": "nodemon index",
@@ -11,6 +10,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "moment": "^2.29.4",
     "mongoose": "^7.0.2"
   },
   "devDependencies": {

@@ -1,7 +1,10 @@
-const {User, Thought} = require('../models/User');
+const User = require('../models/User');
+const Thought = require('../models/Thought');
+const mongoose = require('mongoose');
 
 module.exports = {
   async getUsers(req, res) {
+    console.log("I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     try {
       const users = await User.find();
       res.json(users);
@@ -10,10 +13,11 @@ module.exports = {
     }
   },
   async getSingleUser(req, res) {
+    console.log("I am Here XXXXXXXXXXXXyyyyyyyyyyyyyyyyy")
     try {
       const user = await User.findById({ _id: req.params.userId })
-        .populate('thoughts')
-        .populate('friends');
+        // .populate('thoughts')
+        // .populate('friends');
 
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID!' });
@@ -54,8 +58,12 @@ module.exports = {
   },
 
   async deleteUserandThoughts(req, res) {
+   
     try {
-      const deleteuser = await User.findOneAndRemove({ _id: req.params.userId });
+      console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" +userId)
+      // const userId = mongoose.Types.ObjectId(req.params.userId);
+      console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" +userId)
+      const deleteuser = await User.findOneAndRemove({ _id: req.params.userId});
       
 
       if (!deleteuser) {

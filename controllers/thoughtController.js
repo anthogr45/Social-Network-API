@@ -1,7 +1,11 @@
-const { Thought, User } = require('../models');
+// const { Thought, User } = require('../models');
+const User = require('../models/User');
+const Thought = require('../models/Thought');
+const Reaction = require('../models/Reaction')
 
 module.exports = {
   async getThought(req, res) {
+    console.log("XXXXXXX11XXXXXXX")
     try {
       const thoughts = await Thought.find();
       res.json(thoughts);
@@ -10,6 +14,7 @@ module.exports = {
     }
   },
   async getSingleThought(req, res) {
+    console.log("XXXXXXX11XXXXXXXssssssssss")
     try {
       const thought = await Thought.findOne({ _id: req.params.thoughtId })
 

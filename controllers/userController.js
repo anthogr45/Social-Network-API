@@ -58,23 +58,31 @@ module.exports = {
   },
 
   async deleteUserandThoughts(req, res) {
-   
+
+    const dduser = req.params.userId
+    // console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" + dduser )
     try {
-      console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" +userId)
+      console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" )
       // const userId = mongoose.Types.ObjectId(req.params.userId);
-      console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" +userId)
+      // console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" )
+
+      const duser= await User.findOne({ _id: dduser});
+      // console.log("Userrrrrrrrrrrrrrrr" + duser);
       const deleteuser = await User.findOneAndRemove({ _id: req.params.userId});
       
+      console.log("Deleted" + deleteuser);
 
       if (!deleteuser) {
         return res.status(404).json({ message: 'No user with this id!' });
       }
 
       // Delete the user's associated thoughts
-        await Thought.deleteMany({ username: deleteuser.username });
+        const dthought =  await Thought.deleteMany({ username: deleteuser.username });
+
+        console.log("Deleted THoutgh 000000000" + dthought);
 
 
-      res.json(message, 'User was successfully deleted!');
+      res.status(200).json(dthought);
     } catch (err) {
       res.status(500).json(err);
     }

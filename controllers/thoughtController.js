@@ -82,6 +82,8 @@ module.exports = {
 
 async createThoughtReaction(req, res) {
 
+  console.log("I am here")
+
   try {
     const { thoughtId } = req.params;
     const { reactionBody, username } = req.body;
@@ -100,8 +102,9 @@ async createThoughtReaction(req, res) {
       createdAt: new Date()
     };
 
-    // Add the reaction to the thought's reactions array
-    thought.reactions.push(newReaction);
+    // Add the reaction to the thought's reactions array   
+    const reaction = await Reaction.create(newReaction);
+    thought.reactions.push(reaction.reactionId);
 
     // Save the updated thought
     await thought.save();
@@ -116,34 +119,23 @@ async createThoughtReaction(req, res) {
 
 async deleteReactionfromThought(req, res) {
   try {
-    const { thoughtId, reactionId } = req.params;
+    const { thoughtId } = req.params;
+    const { reaction } = req.body;
 
-    // Find the thought by its ID
-    const thought = await Thought.findById(thoughtId);
-
-    if (!thought) {
-      return res.status(404).json({ error: 'Thought not found' });
-    }
-
-    // Find the index of the reaction in the reactions array
-    const reactionIndex = thought.reactions.findIndex(
-      (reaction) => reaction._id.toString() === reactionId
+    const updatedThought = await Thought.findOneAndUpdate(
+      { _id: thoughtId },
+      { $pull: { reactions: { reaction: reaction } } },
+      { new: true }
     );
 
-    if (reactionIndex === -1) {
-      return res.status(404).json({ error: 'Reaction not found' });
+    if (!updatedThought) {
+      return res.status(404).json({ message: 'Thought not found' });
     }
 
-    // Remove the reaction from the reactions array
-    thought.reactions.splice(reactionIndex, 1);
-
-    // Save the updated thought
-    await thought.save();
-
-    res.json(thought);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(err);
+    res.status(200).json({ message: 'Reaction removed successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
   }
 }
 

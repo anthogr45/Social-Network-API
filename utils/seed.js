@@ -1,7 +1,8 @@
 const connection = require('../config/connection');
-const User = require('../models/User');
-const Thought = require('../models/Thought');
-const Reaction = require('../models/Reaction');
+// const User = require('../models/User');
+// const Thought = require('../models/Thought');
+// const Reaction = require('../models/Reaction');
+const {User, Thought, Reaction } = require('../models')
 const { userData, thoughtData, reactionData } = require('./data');
 
 const seedData = async () => {

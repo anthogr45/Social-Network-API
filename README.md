@@ -40,6 +40,6 @@ Screen layout is available in the repository path:
   
 ## Features Links
 
-- Application vedio demo URL: https://drive.google.com/file/d/1G1EFn_OWSxWFCERWACp5hybXaSG0WpgD/view
-- Github Repository url: https://github.com/anthogr45/Social-Network-API
+- Application video demo URL: https://drive.google.com/file/d/1G1EFn_OWSxWFCERWACp5hybXaSG0WpgD/view
+- Github Repository URL: https://github.com/anthogr45/Social-Network-API
 

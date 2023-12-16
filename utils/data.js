@@ -1,6 +1,6 @@
 const { User, Thought, Reaction } = require('../models');
 
-const userData = [
+const userData = [   // User Data
   {
     username: 'john_doe',
     email: 'john@example.com',
@@ -31,10 +31,11 @@ const userData = [
     thoughts: [],
     friends: []
   },
-  // Add more user data as needed
+ 
 ];
 
-const thoughtData = [
+// Thought Data
+const thoughtData = [  
   {
     thoughtText: 'World is a cool place to live!',
     username: 'john_doe',
@@ -63,6 +64,7 @@ const thoughtData = [
 
 ];
 
+//Reaction Data
 const reactionData = [
   {
     reactionBody: 'Good Idea',

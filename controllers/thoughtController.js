@@ -4,8 +4,8 @@ const Thought = require('../models/Thought');
 const Reaction = require('../models/Reaction')
 
 module.exports = {
-  async getThought(req, res) {
-    console.log("XXXXXXX11XXXXXXX")
+  async getThought(req, res) {  //GET Thought API
+    
     try {
       const thoughts = await Thought.find();
       res.json(thoughts);
@@ -14,7 +14,7 @@ module.exports = {
     }
   },
   async getSingleThought(req, res) {
-    console.log("XXXXXXX11XXXXXXXssssssssss")
+   
     try {
       const thought = await Thought.findOne({ _id: req.params.thoughtId })
 
@@ -46,6 +46,8 @@ module.exports = {
       res.status(500).json({ error: 'Failed to create thought' });
     }
   },
+
+  //Update Thought
   async updateThought(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
@@ -64,6 +66,8 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  //Delete Thought
   async deleteThought(req, res) {
     try {
       const deleteThought = await Thought.findOneAndRemove({ _id: req.params.thoughtId});
@@ -80,6 +84,7 @@ module.exports = {
   },
 
 
+  // Creating a thought Reaction
 async createThoughtReaction(req, res) {
 
   console.log("I am here")
@@ -116,7 +121,7 @@ async createThoughtReaction(req, res) {
   }
 },
 
-
+//Delete reaction from thought
 async deleteReactionfromThought(req, res) {
   try {
     const { thoughtId } = req.params;

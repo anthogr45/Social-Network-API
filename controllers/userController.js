@@ -3,8 +3,8 @@ const Thought = require('../models/Thought');
 const mongoose = require('mongoose');
 
 module.exports = {
-  async getUsers(req, res) {
-    console.log("I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+  async getUsers(req, res) { /// GET User
+    
     try {
       const users = await User.find();
       res.json(users);
@@ -13,12 +13,10 @@ module.exports = {
     }
   },
   async getSingleUser(req, res) {
-    console.log("I am Here XXXXXXXXXXXXyyyyyyyyyyyyyyyyy")
+    
     try {
       const user = await User.findById({ _id: req.params.userId })
-        // .populate('thoughts')
-        // .populate('friends');
-
+      
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID!' });
       }
@@ -38,6 +36,7 @@ module.exports = {
     }
   },
 
+  // Update an user 
   async updateUser(req, res) {
     try {
       const user = await User.findOneAndUpdate(
@@ -57,17 +56,13 @@ module.exports = {
     }
   },
 
+  // Delete User and Thought   ************************************************************ Bonus ***********************************************
   async deleteUserandThoughts(req, res) {
 
     const dduser = req.params.userId
-    // console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" + dduser )
     try {
-      console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" )
-      // const userId = mongoose.Types.ObjectId(req.params.userId);
-      // console.log("Delete I am Here XXXXXXXXXXXXXXXXXXXXXXXXXXXX" )
-
       const duser= await User.findOne({ _id: dduser});
-      // console.log("Userrrrrrrrrrrrrrrr" + duser);
+     
       const deleteuser = await User.findOneAndRemove({ _id: req.params.userId});
       
       console.log("Deleted" + deleteuser);
@@ -75,8 +70,6 @@ module.exports = {
       if (!deleteuser) {
         return res.status(404).json({ message: 'No user with this id!' });
       }
-
-      // Delete the user's associated thoughts
         const dthought =  await Thought.deleteMany({ username: deleteuser.username });
 
         console.log("Deleted THoutgh 000000000" + dthought);
@@ -124,8 +117,7 @@ module.exports = {
       
           // Find the user by their userId
           const user = await User.findById(userId);
-      
-          
+                
           if (!user) {
             return res.status(404).json({ error: 'User or friend not found' });
           }

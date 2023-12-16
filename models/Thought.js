@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema, model } = require('mongoose');
 const moment = require('moment');
 
+// Schema to create thought model
 const thoughtSchema = new Schema(
   {
     thoughtText: {

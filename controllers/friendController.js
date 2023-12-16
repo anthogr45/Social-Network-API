@@ -6,13 +6,10 @@ module.exports = {
     try {
         const { userId, friendId } = req.params;
     
-        // Find the user by their userId
         const user = await User.findById(userId);
     
-        // Find the friend by their friendId
         const friend = await User.findById(friendId);
     
-        // Check if the user and friend exist
         if (!user || !friend) {
           return res.status(404).json({ error: 'User or friend not found' });
         }

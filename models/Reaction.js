@@ -1,5 +1,5 @@
 const { Schema, Types, model } = require('mongoose');
-
+// Schema to create Reactions Schema
 const reactionSchema = new Schema(
   {
     reactionId: {
@@ -31,10 +31,6 @@ const reactionSchema = new Schema(
 function dateFormat(timestamp) {
   return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 }
-
-// thoughtSchema.methods.getters = function() {
-//   return moment(this.createdAt).format('YYYY-MM-DD HH:mm:ss'); 
-// };
 
 const Reaction = model('Reaction', reactionSchema);
 
